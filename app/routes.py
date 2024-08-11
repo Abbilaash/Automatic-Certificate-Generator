@@ -4,6 +4,7 @@ from reportlab.pdfgen import canvas
 from PIL import Image
 import io
 import json
+import zipfile
 import os
 
 main = Blueprint('main', __name__)
@@ -35,18 +36,23 @@ def index():
         # Load data
         with open(data_path) as f:
             data_dict = json.load(f)
+
+        zip_buffer = io.BytesIO()
+
+        with zipfile.ZipFile(zip_buffer, 'a', zipfile.ZIP_DEFLATED, False) as zip_file:
+            # Generate each certificate
+            for item in data_dict:
+                name = data_dict[item]['name']
+                cert_key = data_dict[item]['cert_key']
+                CERTIFICATES[cert_key] = name
+                pdf_filename = f"{name.replace(' ', '_')}.pdf"
+                output_pdf_path = os.path.join(CERTIFICATES_DIR, pdf_filename)
+                generate_certificate_pdf(IMAGE_PATH, name, cert_key, output_pdf_path)
+                zip_file.write(output_pdf_path, pdf_filename)
+            
+        zip_buffer.seek(0)
         
-        # Generate each certificate
-        for item in data_dict:
-            name = data_dict[item]['name']
-            cert_key = data_dict[item]['cert_key']
-            CERTIFICATES[cert_key] = name
-            pdf_filename = f"{name.replace(' ', '_')}.pdf"
-            output_pdf_path = os.path.join(CERTIFICATES_DIR, pdf_filename)
-            generate_certificate_pdf(IMAGE_PATH, name, cert_key, output_pdf_path)
-        
-        flash('Certificates generated successfully!', 'success')
-        return redirect(url_for('main.index'))
+        return send_file(zip_buffer, mimetype='certificates/zip', as_attachment=True, download_name='certificates.zip')
     
     return render_template('index.html')
 
