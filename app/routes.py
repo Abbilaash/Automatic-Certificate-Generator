@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, send_file, redirect, url_for, flash
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
 from PIL import Image
 import io
 import json
@@ -56,22 +58,24 @@ def index():
     
     return render_template('index.html')
 
+
 @main.route('/verify', methods=['GET', 'POST'])
-
-
 def verify():
+    result = None
     if request.method == 'POST':
-        cert_key = request.form.get('cert_key')
-        name = CERTIFICATES.get(cert_key, 'Invalid Certificate')
-        flash(f'Certificate Key: {cert_key}, Name: {name}', 'info')
-        return redirect(url_for('main.verify'))
+        key = request.form['certificate_key']
+        with open('certificates/data.json', 'r') as file:
+            data = json.load(file)
+            print(data)
+            for entry in data:
+                #data[entry] = json.loads(entry)
+                entry = data[entry]
+                if entry['cert_key'] == key:
+                    result = {'name': entry['name'], 'key': key}
+                    break
+    return render_template('verify.html', result=result)
 
 
-
-
-
-    
-    return render_template('verify.html')
 
 def generate_certificate_pdf(image_path, name, cert_key, output_pdf_path):
     try:
@@ -79,8 +83,10 @@ def generate_certificate_pdf(image_path, name, cert_key, output_pdf_path):
         image = Image.open(image_path)
         width, height = image.size
 
-        name_font_size = 20
-        name_font_name = "Helvetica-Bold"
+        pdfmetrics.registerFont(TTFont('Tangerine', 'Tangerine-Regular.ttf'))
+
+        name_font_size = 30
+        name_font_name = "Tangerine"
         cert_key_font_size = 12
         cert_key_font_name = "Helvetica"
         

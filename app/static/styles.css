@@ -127,3 +127,21 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+.result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.result h2 {
+    color: #ff6f61;
+    margin-bottom: 0.5rem;
+}
+
+.result p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}

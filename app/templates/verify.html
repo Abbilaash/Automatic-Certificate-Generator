@@ -3,12 +3,19 @@
 {% block content %}
 <div class="container">
     <h1>Verify Certificate</h1>
-    <form method="POST">
+    <form method="POST" action="{{ url_for('main.verify') }}">
         <div class="form-group">
-            <label for="cert_key">Enter Certificate Key</label>
-            <input type="text" name="cert_key" id="cert_key" class="form-control" placeholder="Enter your certificate key" required>
+            <input type="text" name="certificate_key" class="form-control" placeholder="Enter Certificate Key" required>
         </div>
         <button type="submit" class="btn">Verify</button>
     </form>
+    
+    {% if result %}
+    <div class="result">
+        <h2>Certificate Details:</h2>
+        <p><strong>Name:</strong> {{ result['name'] }}</p>
+        <p><strong>Key:</strong> {{ result['key'] }}</p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
