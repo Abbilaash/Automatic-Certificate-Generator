@@ -1,12 +1,14 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Verify Certificate</h1>
-<form action="/verify" method="post">
-    <div class="form-group">
-        <label for="cert_key">Enter Certificate Key:</label>
-        <input type="text" class="form-control" id="cert_key" name="cert_key" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Verify</button>
-</form>
+<div class="container">
+    <h1>Verify Certificate</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="cert_key">Enter Certificate Key</label>
+            <input type="text" name="cert_key" id="cert_key" class="form-control" placeholder="Enter your certificate key" required>
+        </div>
+        <button type="submit" class="btn">Verify</button>
+    </form>
+</div>
 {% endblock %}

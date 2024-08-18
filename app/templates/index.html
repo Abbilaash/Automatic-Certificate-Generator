@@ -1,12 +1,14 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Generate Certificates</h1>
-<form action="/" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="data">Upload Data (JSON):</label>
-        <input type="file" class="form-control-file" id="data" name="data" accept="application/json" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Generate Certificates</button>
-</form>
+<div class="container">
+    <h1>Generate Certificates</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="data">Upload JSON File</label>
+            <input type="file" name="data" id="data" class="form-control-file" required>
+        </div>
+        <button type="submit" class="btn">Generate Certificates</button>
+    </form>
+</div>
 {% endblock %}

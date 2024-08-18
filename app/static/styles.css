@@ -1,0 +1,129 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #ff6f61, #ff9966);
+    padding: 0.5rem 0;  /* Reduced height */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-family: 'Rubik Moonrocks', cursive;
+    font-size: 2rem;
+    color: #ffa600c4;  /* Changed color to white for better contrast */
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-item {
+    color: #ff7b00;  /* Changed to white for visibility */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-item::before,
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: #ffcc33;
+    left: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-item:hover::before,
+.nav-item:hover::after {
+    transform: scaleX(1);
+}
+
+.nav-item:hover {
+    color: #ffcc33;
+}
+
+.content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #ff6f61;
+    margin-bottom: 1.5rem;
+    font-family: 'Rubik Moonrocks', cursive;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control-file, .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f7f7f7;
+}
+
+.btn {
+    background: linear-gradient(90deg, #ff9966, #ffcc33);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #ffcc33, #ff9966);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #ff6f61;
+    color: #fff;
+    box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

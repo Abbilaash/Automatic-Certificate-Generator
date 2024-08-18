@@ -78,6 +78,11 @@ def generate_certificate_pdf(image_path, name, cert_key, output_pdf_path):
         # Load the PNG image
         image = Image.open(image_path)
         width, height = image.size
+
+        name_font_size = 20
+        name_font_name = "Helvetica-Bold"
+        cert_key_font_size = 12
+        cert_key_font_name = "Helvetica"
         
         # Create a buffer to hold the PDF data
         buffer = io.BytesIO()
@@ -89,16 +94,40 @@ def generate_certificate_pdf(image_path, name, cert_key, output_pdf_path):
         c.drawImage(image_path, 0, 0, width=width, height=height)
         
         # Set font and size for the text
-        c.setFont("Helvetica", 12)
+        c.setFont(name_font_name, name_font_size)
         
-        # Example coordinates, adjust these based on your image layout
-        name_x, name_y = 100, 400  # Coordinates for the name
-        cert_key_x, cert_key_y = 100, 350  # Coordinates for the certificate key
-        
-        # Draw the name and certificate key onto the canvas
-        c.drawString(name_x, name_y, f"Name: {name}")
-        c.drawString(cert_key_x, cert_key_y, f"Certificate Key: {cert_key}")
-        
+        name_y = 300
+        cert_key_x, cert_key_y = 100, 10
+
+        # Calculate the width of the name text
+        name_text_width = c.stringWidth(name, name_font_name, name_font_size)
+
+        # Define the area where you want to center the name text
+        center_area_x_start = 0  # Starting x-coordinate of the area
+        center_area_x_end = width  # Ending x-coordinate of the area
+        center_area_width = center_area_x_end - center_area_x_start  # Width of the area
+
+        # Calculate the starting x-coordinate to center the name text
+        name_x = center_area_x_start + (center_area_width - name_text_width) / 2
+
+        # Draw the name onto the canvas
+        c.drawString(name_x, name_y, name)
+
+        # Set font and size for the certificate key text
+        c.setFont(cert_key_font_name, cert_key_font_size)
+
+        # Calculate the width of the certificate key text
+        cert_key_text_width = c.stringWidth(cert_key, cert_key_font_name, cert_key_font_size)
+
+        # Calculate the x-coordinate to place the certificate key at the right edge
+        cert_key_x = width - cert_key_text_width - 10  # 10 units padding from the right edge
+
+        # Calculate the y-coordinate to place the certificate key at the bottom edge
+        cert_key_y = 25  # 10 units padding from the bottom edge
+
+        # Draw the certificate key onto the canvas
+        c.drawString(cert_key_x, cert_key_y, f"{cert_key}")
+
         # Save the PDF to the buffer
         c.save()
         
